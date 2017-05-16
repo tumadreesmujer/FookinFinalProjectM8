@@ -7,7 +7,9 @@ public class TestCheckSum {
 	public static void main(String args[]) throws Exception {
 		String s = TestCheckSum.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
 		String datafile = s.substring(0,s.length()-5)+"/res/test.jpg";
-
+		
+		//ez comment boiz
+		
 		MessageDigest md = MessageDigest.getInstance("SHA1");
 		FileInputStream fis = new FileInputStream(datafile);
 		byte[] dataBytes = new byte[1024];
