@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 public class TestCheckSum {
 
 	public static void main(String args[]) throws Exception {
+		AutoDetect EZ = new AutoDetect("C:/Users/jordanpk18/Desktop/PicoCTF-master/PicoCTF-master");
 		String s = TestCheckSum.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
 		String datafile = s.substring(0,s.length()-5)+"/res/test.jpg";
 		
@@ -29,4 +30,6 @@ public class TestCheckSum {
 		System.out.println(sb.toString());
 		fis.close();
 	}
+	
+	
 }
