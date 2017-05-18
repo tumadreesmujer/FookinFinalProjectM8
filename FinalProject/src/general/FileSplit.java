@@ -7,14 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class FileSplit {
-    public void basicStuff(){
-		System.out.println("FileSplit currently does nothing");
-	}
-    
     public static void splitFile(File f) throws IOException {
         int partCounter = 0;
 
-        int sizeOfFiles = 1024;// 1MB
+        int sizeOfFiles = 1024*512;
         byte[] buffer = new byte[sizeOfFiles];
 
         try (BufferedInputStream bis = new BufferedInputStream(
@@ -28,7 +24,6 @@ public class FileSplit {
                         + String.format("%03d", partCounter++));
                 try (FileOutputStream out = new FileOutputStream(newFile)) {
                     out.write(buffer, 0, tmp);//tmp is chunk size
-                    System.out.println("this is doing what its supposed to");
                 }
             }
         }
