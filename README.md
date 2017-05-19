@@ -5,6 +5,7 @@ FookinFinalProjectM8
 
 Working:
 - Getting checksums of file
+- Autodetecting when a file is put into the shared folder
 
 
 Needed (in order of probable difficulty):
