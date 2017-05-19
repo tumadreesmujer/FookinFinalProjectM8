@@ -20,8 +20,7 @@ public class FileSplit {
             int tmp = 0;
             while ((tmp = bis.read(buffer)) > 0) {
                 //write each chunk of data into separate file with different number in name
-                File newFile = new File(f.getParent(), name + "."
-                        + String.format("%03d", partCounter++));
+                File newFile = new File(f.getParent()+"/test", name + "." + String.format("%03d", partCounter++));
                 try (FileOutputStream out = new FileOutputStream(newFile)) {
                     out.write(buffer, 0, tmp);//tmp is chunk size
                 }
@@ -29,7 +28,7 @@ public class FileSplit {
         }
     }
 
-    public static void mainFileSplit(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
     	String s = TestCheckSum.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
 		String datafile = s.substring(0,s.length()-5)+"/res/test.jpg";
     	splitFile(new File(datafile));
