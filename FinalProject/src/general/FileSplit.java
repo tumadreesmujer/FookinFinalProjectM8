@@ -2,8 +2,11 @@ package general;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 public class FileSplit {
@@ -23,6 +26,11 @@ public class FileSplit {
                 File newFile = new File(f.getParent()+"/test", name + "." + String.format("%03d", partCounter++));
                 try (FileOutputStream out = new FileOutputStream(newFile)) {
                     out.write(buffer, 0, tmp);//tmp is chunk size
+                } catch (FileNotFoundException e){
+                	Files.createDirectories(Paths.get(f.getParent()+"/test"));
+                	FileOutputStream out = new FileOutputStream(newFile);
+                	out.write(buffer, 0, tmp);
+                	out.close();
                 }
             }
         }
