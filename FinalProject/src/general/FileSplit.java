@@ -29,7 +29,7 @@ public class FileSplit {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void mainFileSplit(String[] args) throws IOException {
     	String s = TestCheckSum.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
 		String datafile = s.substring(0,s.length()-5)+"/res/test.jpg";
     	splitFile(new File(datafile));

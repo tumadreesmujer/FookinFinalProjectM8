@@ -10,11 +10,15 @@ import java.nio.file.Files;
 
 
 public class FileMerge {
-	static File f = new File("C:/Users/VytautasB18/Documents/fookinAIDS/FookinFinalProjectM8/FinalProject/res/img");
+	static String s = TestCheckSum.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+	static String dataFile = s.substring(0,s.length()-5)+"/res/img";
+	static String dataDirectory = s.substring(0,s.length()-5)+"/res/test2.jpg";
+	
+	static File f = new File(dataFile);
 	
 	public static void mainFileMerge(String[] args) throws IOException{
 		ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
-		mergeFiles(files, new File("C:/Users/VytautasB18/Documents/fookinAIDS/FookinFinalProjectM8/FinalProject/res/test2.jpg"));
+		mergeFiles(files, new File(dataDirectory));
 	}
 	public static void mergeFiles(ArrayList<File> files, File into)
 	        throws IOException {
