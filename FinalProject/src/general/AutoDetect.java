@@ -3,10 +3,11 @@ package general;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AutoDetect {
-	static ArrayList<File> Files = new ArrayList<File>();
+	static List<File> files = new ArrayList();
 	static String dirPath;
 	static File f;
 	static boolean isKill;
@@ -14,8 +15,9 @@ public class AutoDetect {
 	public AutoDetect(String p) throws InterruptedException{
 		dirPath = p;
 		f = new File(p);
-		ArrayList<File> temp;
+		List<File> temp;
 		while(!isKill){
+			f = new File(p);
 			temp = checkNewFiles();
 			if(temp != null){
 				for(int i = 0; i < temp.size();i++){
@@ -27,18 +29,24 @@ public class AutoDetect {
 		}
 	}
 	
-	public ArrayList<File> checkNewFiles(){
-		ArrayList<File> temp = new ArrayList<File>();
-		
-		return null;
+	public List<File> checkNewFiles(){
+		List<File> temp= new ArrayList();
+		temp=updateFiles(f,temp);
+		for(int i = temp.size()-1;i>=0;i--){
+			if(!files.contains(temp.get(i)))
+				files.add(temp.get(i));
+			else
+				temp.remove(i);
+		}
+		return temp.size()==0?null:temp;
 	}
 	
-	public ArrayList<File> getFiles(){
-		return Files;		
+	public List<File> getFiles(){
+		return files;		
 	}
 	
 	public static void listFiles(File temp){
-		ArrayList<File> F =new ArrayList<File>(Arrays.asList(temp.listFiles()));
+		List<File> F =Arrays.asList(temp.listFiles());
 		for(int i = 0; i<F.size();i++){
 			if(F.get(i).isFile()){
 				System.out.println(F.get(i));
@@ -49,6 +57,23 @@ public class AutoDetect {
 			
 		}
 		
+	}
+	
+	public List<File> updateFiles(File F, List<File> AL){
+		List<File> temp = (Arrays.asList(F.listFiles()));
+		for(int i = 0; i < temp.size();i++){
+			//System.out.println(temp.get(i).getPath().replaceAll("\\\\","/"));
+			if(temp.get(i).isFile()){
+				File tempF =new File( temp.get(i).getPath().replaceAll("\\\\","/"));
+				
+				AL.add(tempF);
+			}
+			if(temp.get(i).isDirectory()){
+				AL.addAll(updateFiles(new File( temp.get(i).getPath().replaceAll("\\\\","/")),AL));
+			}
+			
+		}
+		return AL;
 	}
 	
 	public void killEverything(){
