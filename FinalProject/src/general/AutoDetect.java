@@ -1,6 +1,7 @@
 package general;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +12,7 @@ public class AutoDetect {
 	static String dirPath;
 	static File f;
 	static boolean isKill;
+	static int timeInterval = 20;
 	
 	public AutoDetect(String p) throws InterruptedException{
 		dirPath = p;
@@ -25,7 +27,7 @@ public class AutoDetect {
 				}
 			}
 			//send to VB's code
-			TimeUnit.SECONDS.sleep(10);
+			TimeUnit.SECONDS.sleep(timeInterval);
 		}
 	}
 	
@@ -65,7 +67,6 @@ public class AutoDetect {
 			//System.out.println(temp.get(i).getPath().replaceAll("\\\\","/"));
 			if(temp.get(i).isFile()){
 				File tempF =new File( temp.get(i).getPath().replaceAll("\\\\","/"));
-				
 				AL.add(tempF);
 			}
 			if(temp.get(i).isDirectory()){
@@ -79,4 +80,17 @@ public class AutoDetect {
 	public void killEverything(){
 		isKill=true;
 	}
+	
+    public static void mainAutoDetect(String[] args) throws IOException {
+    	try {
+    		String s = AutoDetect.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+    		String dataFile = s.substring(0,s.length()-5)+"/res/test";
+    		AutoDetect testAuto = new AutoDetect(dataFile);
+		} catch (InterruptedException e) {
+			//empty, but required
+			e.printStackTrace();
+		}
+    	
+    	
+    }
 }
