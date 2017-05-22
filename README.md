@@ -12,6 +12,7 @@ Working:
 
 Needed (in order of probable difficulty):
 - Encryption/decryption of files
+- File to track packets and checksums
 - Network connection from one server to one client
 - Versioning for conflict resolution
 - Progress trackers for downloads
