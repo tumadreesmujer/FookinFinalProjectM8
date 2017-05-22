@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AutoDetect {
-	static List<File> files = new ArrayList();
+	static List<File> files = new ArrayList<File>();
 	static String dirPath;
 	static File f;
 	static boolean isKill;
@@ -32,7 +32,7 @@ public class AutoDetect {
 	}
 	
 	public List<File> checkNewFiles(){
-		List<File> temp= new ArrayList();
+		List<File> temp= new ArrayList<File>();
 		temp=updateFiles(f,temp);
 		for(int i = temp.size()-1;i>=0;i--){
 			if(!files.contains(temp.get(i)))
