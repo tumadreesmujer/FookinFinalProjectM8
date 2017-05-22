@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class AutoDetect {
-	static List<File> files = new ArrayList();
+public  class AutoDetect {
+	static List<File> files = new ArrayList<File>();
 	static String dirPath;
 	static File f;
 	static boolean isKill;
@@ -32,7 +32,7 @@ public class AutoDetect {
 	}
 	
 	public List<File> checkNewFiles(){
-		List<File> temp= new ArrayList();
+		List<File> temp= new ArrayList<File>();
 		temp=updateFiles(f,temp);
 		for(int i = temp.size()-1;i>=0;i--){
 			if(!files.contains(temp.get(i)))
@@ -81,15 +81,11 @@ public class AutoDetect {
 		isKill=true;
 	}
 	
-    public static void mainAutoDetect(String[] args) throws IOException {
-    	try {
+    public static void mainAutoDetect(String[] args) throws IOException, InterruptedException {
     		String s = AutoDetect.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
     		String dataFile = s.substring(0,s.length()-5)+"/res/test";
     		AutoDetect testAuto = new AutoDetect(dataFile);
-		} catch (InterruptedException e) {
-			//empty, but required
-			e.printStackTrace();
-		}
+		
     	
     	
     }
