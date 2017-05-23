@@ -8,18 +8,33 @@ public class Versioning {
 	TextFileReader v;
 	public Versioning(File f) throws IOException{
 		v = new TextFileReader(f);
-	}
-	public void Main(String[] args){
+	}/*
+	public void Main(String[] args) throws IOException{
+		AutoDetect()
 		
-	}
-	public boolean isCurrent(File f, String h){
+	}*/
+	public int isCurrent(File f, String h, int ver){
 		ArrayList<String> temp = v.getText();
 		for(int i=0;i<temp.size();i++){
-			if(temp.get(i).substring(temp.get(i).indexOf(";")+1).equals(f.getPath().replaceAll("\\\\","/")+" "+h)){
-				return true;
+			if(temp.get(i).substring(0,temp.get(i).indexOf("*")).equals(f.getPath().replaceAll("\\\\","/"))){
+				if(Integer.parseInt(temp.get(i).substring(temp.get(i).indexOf(";")+1))==ver){
+					return 0; //current
+				}
+				if(Integer.parseInt(temp.get(i).substring(temp.get(i).indexOf(";")+1))>=ver){
+					return 1; //old
+				}
+				if(Integer.parseInt(temp.get(i).substring(temp.get(1).indexOf(";")+1))<=ver){
+					temp.set(i, f.getPath().replaceAll("\\\\","/")+"*"+h+";"+ver);
+					v.updateText(temp);
+					v.saveText();
+					return 2; //new
+				}
 			}
 			
 		}
-		return false;
+		temp.add(f.getPath().replaceAll("\\\\","/")+"*"+h+";"+ver);
+		v.updateText(temp);
+		v.saveText();
+		return -3; //DNE
 	}
 }

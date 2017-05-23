@@ -40,6 +40,9 @@ public class TextFileReader {
 	public void updateLine(int i, String S){
 		s.set(i, S);
 	}
+	public void addLine(int i, String S){
+		s.add(i, S);
+	}
 	public void updateText(ArrayList<String> S){
 		s=S;	
 	}
