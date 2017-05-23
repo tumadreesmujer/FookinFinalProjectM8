@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class TextReader {
-	public static ArrayList<String> s;
-	public static PrintWriter pr;
-	public TextReader(File f) throws IOException{
+public class TextFileReader {
+	public ArrayList<String> s;
+	public PrintWriter pr;
+	public TextFileReader(File f) throws IOException{
 		readFile(f.getAbsolutePath());
 	}
-	private static void readFile(String path) throws IOException{
+	private void readFile(String path) throws IOException{
 		FileReader fr;
 		try {
 			fr = new FileReader(path);
@@ -31,24 +31,24 @@ public class TextReader {
 		}
 		tr.close();
 	}
-	public static String getLine(int i){
+	public String getLine(int i){
 		return s.get(i);
 	}
-	public static ArrayList<String> getText(){
+	public ArrayList<String> getText(){
 		return s;
 	}
-	public static void updateLine(int i, String S){
+	public void updateLine(int i, String S){
 		s.set(i, S);
 	}
-	public static void updateText(ArrayList<String> S){
+	public void updateText(ArrayList<String> S){
 		s=S;	
 	}
-	public static void saveText(){
+	public void saveText(){
 		for(int i=0;i<s.size();i++)
 			pr.println(s.get(i));
 		pr.close();
 	}
-	public static void main(String[] args) throws IOException{
+	/*public static void main(String[] args) throws IOException{
 		TextReader f1 = new TextReader(new File("C:/Users/Jordan/Documents/GitHub/FookinFinalProjectM8/ezpz.md"));
-	}
+	}*/
 }

@@ -1,7 +1,9 @@
 package general;
+import static general.CheckSum.cSum;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +16,7 @@ public  class AutoDetect {
 	static boolean isKill;
 	static int timeInterval = 20;
 	
-	public AutoDetect(String p) throws InterruptedException{
+	public AutoDetect(String p) throws InterruptedException, NoSuchAlgorithmException, IOException{
 		dirPath = p;
 		f = new File(p);
 		List<File> temp;
@@ -23,7 +25,7 @@ public  class AutoDetect {
 			temp = checkNewFiles();
 			if(temp != null){
 				for(int i = 0; i < temp.size();i++){
-					System.out.println(temp.get(i));
+					System.out.println(temp.get(i) +" " + cSum(temp.get(i).getPath()));
 				}
 			}
 			//send to VB's code
@@ -47,11 +49,11 @@ public  class AutoDetect {
 		return files;		
 	}
 	
-	public static void listFiles(File temp){
+	public static void listFiles(File temp) throws NoSuchAlgorithmException, IOException{
 		List<File> F =Arrays.asList(temp.listFiles());
 		for(int i = 0; i<F.size();i++){
 			if(F.get(i).isFile()){
-				System.out.println(F.get(i));
+				System.out.println(F.get(i) +" " + cSum(F.get(i).getPath()));
 			}
 			if(F.get(i).isDirectory()){
 				listFiles(F.get(i));				
@@ -81,7 +83,7 @@ public  class AutoDetect {
 		isKill=true;
 	}
 	
-    public static void mainAutoDetect(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, NoSuchAlgorithmException {
     		String s = AutoDetect.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
     		String dataFile = s.substring(0,s.length()-5)+"/res/test";
     		AutoDetect testAuto = new AutoDetect(dataFile);
