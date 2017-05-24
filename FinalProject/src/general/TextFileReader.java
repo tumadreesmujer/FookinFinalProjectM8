@@ -6,13 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class TextFileReader {
 	public ArrayList<String> s;
+	public final String path;
 	public PrintWriter pr;
 	public TextFileReader(File f) throws IOException{
-		readFile(f.getAbsolutePath());
+		path = f.getAbsolutePath();
+		readFile(path);
 	}
 	private void readFile(String path) throws IOException{
 		FileReader fr;
@@ -29,6 +32,7 @@ public class TextFileReader {
 		while((temp = tr.readLine())!=null){
 			f.add(temp);
 		}
+		s=f;
 		tr.close();
 	}
 	public String getLine(int i){
@@ -46,9 +50,12 @@ public class TextFileReader {
 	public void updateText(ArrayList<String> S){
 		s=S;	
 	}
-	public void saveText(){
-		for(int i=0;i<s.size();i++)
-			pr.println(s.get(i));
+	public void saveText() throws FileNotFoundException, UnsupportedEncodingException{
+		pr = new PrintWriter(path, "UTF-8");
+		for(int i=0;i<s.size();i++){
+			String temp = s.get(i);
+			pr.println(temp);
+		}
 		pr.close();
 	}
 	/*public static void main(String[] args) throws IOException{

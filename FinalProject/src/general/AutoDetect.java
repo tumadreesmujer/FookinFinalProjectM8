@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public  class AutoDetect {
 	static List<File> files = new ArrayList<File>();
+	static List<String> cSums = new ArrayList<String>();
 	static String dirPath;
 	static File f;
 	static boolean isKill;
@@ -36,16 +37,23 @@ public  class AutoDetect {
 		}
 	}
 	
-	public List<File> checkNewFiles(){
+	public List<File> checkNewFiles() throws NoSuchAlgorithmException, IOException{
 		List<File> temp= new ArrayList<File>();
 		temp=updateFiles(f,temp);
 		for(int i = temp.size()-1;i>=0;i--){
-			if(!files.contains(temp.get(i)))
-				files.add(temp.get(i));
-			else
+			if(!files.contains(temp.get(i))){
+					files.add(temp.get(i));
+					cSums.add(cSum(temp.get(i).getPath()));
+			}
+			if(files.contains(temp.get(i))&&cSums.get(files.indexOf(temp.get(i))).equals(cSum(temp.get(i).getPath()))){
+			}
+			else{
 				temp.remove(i);
+				cSums.remove(i);
+			}
 		}
 		return temp.size()==0?null:temp;
+		
 	}
 	
 	public List<File> getFiles(){
