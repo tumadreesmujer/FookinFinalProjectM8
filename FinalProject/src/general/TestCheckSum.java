@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 
 public class TestCheckSum {
 
-	public static void mainTestChecksum(String args[]) throws Exception {
+	public static void mainTestCheckSum(String args[]) throws Exception {
 		String s = TestCheckSum.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
 		String datafile = s.substring(0,s.length()-5)+"/res/test.jpg";
 		
