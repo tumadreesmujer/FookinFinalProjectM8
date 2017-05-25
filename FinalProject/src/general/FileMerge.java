@@ -10,7 +10,7 @@ import java.nio.file.Files;
 
 
 public class FileMerge {
-	static String s = TestCheckSum.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+	static String s = CheckSum.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
 	static String dataFile = s.substring(0,s.length()-5)+"/res/img";
 	static String dataDirectory = s.substring(0,s.length()-5)+"/res/test2.jpg";
 	

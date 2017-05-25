@@ -1,15 +1,18 @@
 package general;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-public class TestCheckSum {
+public final class CheckSum {
 
-	public static void mainTestCheckSum(String args[]) throws Exception {
-		String s = TestCheckSum.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
-		String datafile = s.substring(0,s.length()-5)+"/res/test.jpg";
+	public CheckSum(String path){		
 		
+	}
+	public static String cSum(String path) throws NoSuchAlgorithmException, IOException{
 		MessageDigest md = MessageDigest.getInstance("SHA1");
-		FileInputStream fis = new FileInputStream(datafile);
+		FileInputStream fis = new FileInputStream(path);
 		byte[] dataBytes = new byte[1024];
 
 		int nread = 0;
@@ -25,9 +28,9 @@ public class TestCheckSum {
 		for (int i = 0; i < mdbytes.length; i++) {
 			sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
 		}
-
-		System.out.println(sb.toString());
 		fis.close();
+		return sb.toString();
+		
 	}
 	
 }
