@@ -23,11 +23,11 @@ public class Versioning {
 				if(Integer.parseInt(temp.get(i).substring(temp.get(i).indexOf(";")+1))==ver){
 					return 0; //current
 				}
-				if(Integer.parseInt(temp.get(i).substring(temp.get(i).indexOf(";")+1))>=ver){
+				if(Integer.parseInt(temp.get(i).substring(temp.get(i).indexOf(";")+1))>ver){
 					return 1; //old
 				}
-				if(Integer.parseInt(temp.get(i).substring(temp.get(1).indexOf(";")+1))<=ver){
-					temp.set(i, f.getPath().replaceAll("\\\\","/")+"*"+h+";"+ver);
+				if(Integer.parseInt(temp.get(i).substring(temp.get(1).indexOf(";")+1))<ver){
+					temp.add(i, f.getPath().replaceAll("\\\\","/")+"*"+h+";"+ver);
 					v.updateText(temp);
 					v.saveText();
 					return 2; //new

@@ -43,24 +43,8 @@ public  class AutoDetect {
 		for(int i = temp.size()-1;i>=0;i--){
 			if(!files.contains(temp.get(i))){
 					files.add(temp.get(i));
-					cSums.add(cSum(temp.get(i).getPath()));
-			}
-			List<File> temp2=new ArrayList<File>();
-			int tempInt=0;
-			while(tempInt!=-1){
-				tempint=temp2.indexOf(temp.get(i);
-				if(cSums.get(tempInt).equals(cSum(temp.get(i).getPath()))){
-					files.add(temp.get(i));
-					cSums.add():
-				}
-				temp2.remove(tempInt);
-			} //if past here, checksum for file does not exist in the versioning file
-			if(files.contains(temp.get(i))&&cSums.get(files.indexOf(temp.get(i))).equals(cSum(temp.get(i).getPath()))){
-				
-			}
-			else{
+			}else{
 				temp.remove(i);
-				cSums.remove(i);
 			}
 		}
 		return temp.size()==0?null:temp;
