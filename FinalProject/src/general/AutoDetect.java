@@ -1,20 +1,25 @@
 package general;
+import static general.CheckSum.cSum;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class AutoDetect {
-	static List<File> files = new ArrayList();
+public  class AutoDetect {
+	static List<File> files = new ArrayList<File>();
+	static List<String> cSums = new ArrayList<String>();
 	static String dirPath;
 	static File f;
 	static boolean isKill;
 	static int timeInterval = 20;
+	static Versioning v;
 	
-	public AutoDetect(String p) throws InterruptedException{
+	public AutoDetect(String p, Versioning V) throws InterruptedException, NoSuchAlgorithmException, IOException{
+		v=V;
 		dirPath = p;
 		f = new File(p);
 		List<File> temp;
@@ -23,7 +28,8 @@ public class AutoDetect {
 			temp = checkNewFiles();
 			if(temp != null){
 				for(int i = 0; i < temp.size();i++){
-					System.out.println(temp.get(i));
+					System.out.println(v.isCurrent(temp.get(i),cSum(temp.get(i).getPath()),0));
+					System.out.println(temp.get(i) +" " + cSum(temp.get(i).getPath()));
 				}
 			}
 			//send to VB's code
@@ -31,27 +37,30 @@ public class AutoDetect {
 		}
 	}
 	
-	public List<File> checkNewFiles(){
-		List<File> temp= new ArrayList();
+	public List<File> checkNewFiles() throws NoSuchAlgorithmException, IOException{
+		List<File> temp= new ArrayList<File>();
 		temp=updateFiles(f,temp);
 		for(int i = temp.size()-1;i>=0;i--){
-			if(!files.contains(temp.get(i)))
-				files.add(temp.get(i));
-			else
+			if(!files.contains(temp.get(i))){
+					files.add(temp.get(i));
+			}else{
 				temp.remove(i);
+			}
 		}
 		return temp.size()==0?null:temp;
+		
 	}
 	
 	public List<File> getFiles(){
 		return files;		
 	}
 	
-	public static void listFiles(File temp){
+	public static void listFiles(File temp) throws NoSuchAlgorithmException, IOException{
 		List<File> F =Arrays.asList(temp.listFiles());
 		for(int i = 0; i<F.size();i++){
 			if(F.get(i).isFile()){
-				System.out.println(F.get(i));
+				System.out.println(v.isCurrent(F.get(i),cSum(F.get(i).getPath()),0));
+//				System.out.println(F.get(i) +" " + cSum(F.get(i).getPath()));
 			}
 			if(F.get(i).isDirectory()){
 				listFiles(F.get(i));				
@@ -81,15 +90,12 @@ public class AutoDetect {
 		isKill=true;
 	}
 	
-    public static void mainAutoDetect(String[] args) throws IOException {
-    	try {
+    public static void main(String[] args) throws IOException, InterruptedException, NoSuchAlgorithmException {
     		String s = AutoDetect.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
     		String dataFile = s.substring(0,s.length()-5)+"/res/test";
-    		AutoDetect testAuto = new AutoDetect(dataFile);
-		} catch (InterruptedException e) {
-			//empty, but required
-			e.printStackTrace();
-		}
+    		Versioning a = new Versioning(new File(s.substring(0,s.length()-5)+"/res/.versioning.ffpv"));
+    		AutoDetect testAuto = new AutoDetect(dataFile,a);
+		
     	
     	
     }
