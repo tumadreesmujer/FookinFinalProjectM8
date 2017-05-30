@@ -9,9 +9,9 @@ Working:
 - Splitting file into chunks of size n
 - Reassembling chunks back into full file
 - Versioning file
+- Encryption/decryption of files
 
 Needed (in order of probable difficulty):
-- Encryption/decryption of files
 - File to track packets and checksums
 - Network connection from one server to one client
 - Conflict resolution
