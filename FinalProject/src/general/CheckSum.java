@@ -32,5 +32,4 @@ public final class CheckSum {
 		return sb.toString();
 		
 	}
-	
 }
