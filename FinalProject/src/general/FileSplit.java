@@ -10,10 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 public class FileSplit {
-    public static void splitFile(File f) throws IOException {
+    public FileSplit(File f) throws IOException {
         int partCounter = 0;
 
-        int sizeOfFiles = 1024*512;
+        int sizeOfFiles = 8*8;
         byte[] buffer = new byte[sizeOfFiles];
 
         try (BufferedInputStream bis = new BufferedInputStream(
@@ -23,11 +23,11 @@ public class FileSplit {
             int tmp = 0;
             while ((tmp = bis.read(buffer)) > 0) {
                 //write each chunk of data into separate file with different number in name
-                File newFile = new File(f.getParent()+"/test", name + "." + String.format("%03d", partCounter++));
+                File newFile = new File(f.getParent()+"/$temp", name + "." + String.format("%07d", partCounter++));
                 try (FileOutputStream out = new FileOutputStream(newFile)) {
                     out.write(buffer, 0, tmp);//tmp is chunk size
                 } catch (FileNotFoundException e){
-                	Files.createDirectories(Paths.get(f.getParent()+"/test"));
+                	Files.createDirectories(Paths.get(f.getParent()+"/$temp"));
                 	FileOutputStream out = new FileOutputStream(newFile);
                 	out.write(buffer, 0, tmp);
                 	out.close();
@@ -39,6 +39,6 @@ public class FileSplit {
     public static void mainFileSplit(String[] args) throws IOException {
     	String s = FileSplit.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
 		String datafile = s.substring(0,s.length()-5)+"/res/test.jpg";
-    	splitFile(new File(datafile));
+    	//FileSplit(new File(datafile));
     }
 }
