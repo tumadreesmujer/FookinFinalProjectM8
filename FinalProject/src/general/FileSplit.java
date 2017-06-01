@@ -23,7 +23,7 @@ public class FileSplit {
             int tmp = 0;
             while ((tmp = bis.read(buffer)) > 0) {
                 //write each chunk of data into separate file with different number in name
-                File newFile = new File(f.getParent()+"/test", name + "." + String.format("%03d", partCounter++));
+                File newFile = new File(f.getParent()+"/test", name + "." + String.format("%07d", partCounter++));
                 try (FileOutputStream out = new FileOutputStream(newFile)) {
                     out.write(buffer, 0, tmp);//tmp is chunk size
                 } catch (FileNotFoundException e){

@@ -23,18 +23,19 @@ public  class AutoDetect {
 		dirPath = p;
 		f = new File(p);
 		List<File> temp;
-		while(!isKill){
+		//while(!isKill){
 			f = new File(p);
 			temp = checkNewFiles();
 			if(temp != null){
 				for(int i = 0; i < temp.size();i++){
-					System.out.println(v.isCurrent(temp.get(i),cSum(temp.get(i).getPath()),0));
-					System.out.println(temp.get(i) +" " + cSum(temp.get(i).getPath()));
+					
+					//System.out.println(v.isCurrent(temp.get(i),cSum(temp.get(i).getPath()),0));
+					//System.out.println(temp.get(i) +" " + cSum(temp.get(i).getPath()));
 				}
 			}
 			//send to VB's code
-			TimeUnit.SECONDS.sleep(timeInterval);
-		}
+			//TimeUnit.SECONDS.sleep(timeInterval);
+		//}
 	}
 	
 	public List<File> checkNewFiles() throws NoSuchAlgorithmException, IOException{
@@ -90,13 +91,11 @@ public  class AutoDetect {
 		isKill=true;
 	}
 	
-    public static void main(String[] args) throws IOException, InterruptedException, NoSuchAlgorithmException {
+    public static void mainAutoDetect(String[] args) throws IOException, InterruptedException, NoSuchAlgorithmException {
     		String s = AutoDetect.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
     		String dataFile = s.substring(0,s.length()-5)+"/res/test";
     		Versioning a = new Versioning(new File(s.substring(0,s.length()-5)+"/res/.versioning.ffpv"));
     		AutoDetect testAuto = new AutoDetect(dataFile,a);
-		
-    	
-    	
+	
     }
 }
