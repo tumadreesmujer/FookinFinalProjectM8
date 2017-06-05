@@ -1,18 +1,10 @@
 package general;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 /**
  * A simple Swing-based client for the capitalization server.
@@ -31,7 +23,9 @@ public class Client {
      * listener with the textfield so that pressing Enter in the
      * listener sends the textfield contents to the server.
      */
-    public Client() {
+    public Client(String sA, int sP) {
+    	serverAddress=sA;
+    	serverPort=sP;
 
         // Add Listeners
         /*dataField.addActionListener(new ActionListener() {
@@ -82,7 +76,7 @@ public class Client {
      * Runs the client application.
      */
     public static void main(String[] args) throws Exception {
-        Client client = new Client();
+        Client client = new Client("IP",9000);
         client.connectToServer();
     }
 }
