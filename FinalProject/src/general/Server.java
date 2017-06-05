@@ -25,6 +25,7 @@ public class Server {
                 try {
                     PrintWriter out =
                         new PrintWriter(socket.getOutputStream(), true);
+                    System.out.println("Connected to:"+socket.getInetAddress()+":"+socket.getPort());
                     out.println(new Date().toString());
                 } finally {
                     socket.close();

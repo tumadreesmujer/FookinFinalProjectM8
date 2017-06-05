@@ -76,7 +76,7 @@ public class Client {
      * Runs the client application.
      */
     public static void main(String[] args) throws Exception {
-        Client client = new Client("IP",9000);
+        Client client = new Client("IP",9090);
         client.connectToServer();
     }
 }
