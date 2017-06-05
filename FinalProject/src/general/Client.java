@@ -24,10 +24,8 @@ public class Client {
 
     private BufferedReader in;
     private PrintWriter out;
-    private JFrame frame = new JFrame("Capitalize Client");
-    private JTextField dataField = new JTextField(40);
-    private JTextArea messageArea = new JTextArea(8, 60);
-
+    private String serverAddress;
+    private int serverPort;
     /**
      * Constructs the client by laying out the GUI and registering a
      * listener with the textfield so that pressing Enter in the
@@ -35,21 +33,16 @@ public class Client {
      */
     public Client() {
 
-        // Layout GUI
-        messageArea.setEditable(false);
-        frame.getContentPane().add(dataField, "North");
-        frame.getContentPane().add(new JScrollPane(messageArea), "Center");
-
         // Add Listeners
-        dataField.addActionListener(new ActionListener() {
-            /**
+        /*dataField.addActionListener(new ActionListener() {
+            *//**
              * Responds to pressing the enter key in the textfield
              * by sending the contents of the text field to the
              * server and displaying the response from the server
              * in the text area.  If the response is "." we exit
              * the whole application, which closes all sockets,
              * streams and windows.
-             */
+             *//*
             public void actionPerformed(ActionEvent e) {
                 out.println(dataField.getText());
                    String response;
@@ -64,7 +57,7 @@ public class Client {
                 messageArea.append(response + "\n");
                 dataField.selectAll();
             }
-        });
+        });*/
     }
 
     /**
@@ -75,24 +68,14 @@ public class Client {
      * client immediately after establishing a connection.
      */
     public void connectToServer() throws IOException {
-
-        // Get the server address from a dialog box.
-        String serverAddress = JOptionPane.showInputDialog(
-            frame,
-            "Enter IP Address of the Server:",
-            "Welcome to the Capitalization Program",
-            JOptionPane.QUESTION_MESSAGE);
-
-        // Make connection and initialize streams
-        Socket socket = new Socket(serverAddress, 9898);
+		Socket socket = new Socket(serverAddress, serverPort);
         in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
 
         // Consume the initial welcoming messages from the server
-        for (int i = 0; i < 3; i++) {
-            messageArea.append(in.readLine() + "\n");
-        }
+
+        System.out.println(in.readLine());
     }
 
     /**
@@ -100,9 +83,6 @@ public class Client {
      */
     public static void main(String[] args) throws Exception {
         Client client = new Client();
-        client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        client.frame.pack();
-        client.frame.setVisible(true);
         client.connectToServer();
     }
 }
