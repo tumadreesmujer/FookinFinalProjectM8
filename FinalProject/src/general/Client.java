@@ -82,12 +82,12 @@ public class Client {
     public static void main(String[] args) throws Exception {
         Client client = new Client("10.202.34.184",9090);
         client.connectToServer();
-        byte[] tByte = new byte[1024];
+        byte[] tByte = new byte[1024*10];
         InputStream is = socket.getInputStream();
-        FileOutputStream fos = new FileOutputStream("s.pdf");
+        FileOutputStream fos = new FileOutputStream("test.jpg");
         BufferedOutputStream bos = new BufferedOutputStream(fos);
-        int bytesRead = is.read(tByte, 0, tByte.length);
-        bos.write(tByte, 0, bytesRead);
+        int bytesRead = is.read(tByte, 0, 10000);
+        bos.write(tByte, 0, 10000);
         bos.close();
     }
 }
