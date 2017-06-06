@@ -1,6 +1,10 @@
 package general;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,27 +17,43 @@ import java.util.Date;
  * server you can write.
  */
 public class Server {
-
+	static ServerSocket listener;
+	static Socket socket;
     /**
      * Runs the server.
      */
     public static void main(String[] args) throws IOException {
-        ServerSocket listener = new ServerSocket(9090);
+        listener = new ServerSocket(9090);
         try {
             while (true) {
-                Socket socket = listener.accept();
+                socket = listener.accept();
                 try {
                     PrintWriter out =
                         new PrintWriter(socket.getOutputStream(), true);
                     System.out.println("Connected to:"+socket.getInetAddress()+":"+socket.getPort());
                     out.println(new Date().toString());
-                } finally {
-                    socket.close();
+                    File tFile=new File("res/test/dank-memes_o_6669985.jpg");
+                    byte[] tByte=new byte[(int)tFile.length()];
+                    
+                    
+                    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(tFile));
+                    bis.read(tByte, 0, tByte.length);
+                    OutputStream os = socket.getOutputStream();
+                    os.write(tByte, 0, tByte.length);
+                    os.flush();
+                    
+                    
+                } finally{
                 }
             }
         }
         finally {
-            listener.close();
+            
         }
     }
+    public void killServer() throws IOException{
+            socket.close();
+            listener.close();
+    }
+    
 }
