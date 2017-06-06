@@ -32,15 +32,21 @@ public class Server {
                         new PrintWriter(socket.getOutputStream(), true);
                     System.out.println("Connected to:"+socket.getInetAddress()+":"+socket.getPort());
                     out.println(new Date().toString());
-                    File tFile=new File("res/test/dank-memes_o_6669985.jpg");
-                    byte[] tByte=new byte[(int)tFile.length()];
+                    File tFile=new File("res/test/maxresdefault.jpg");
+                    byte[] tByte=new byte[1024*3];
                     
                     
                     BufferedInputStream bis = new BufferedInputStream(new FileInputStream(tFile));
-                    bis.read(tByte, 0, tByte.length);
                     OutputStream os = socket.getOutputStream();
-                    os.write(tByte, 0, tByte.length);
+                    bis.read(tByte, 0, 1024);
+                    os.write(tByte, 0, 1024);
+                    //os.flush();
+                    bis.read(tByte, 1024, 1024);
+                    os.write(tByte, 0, 1024);
+                    bis.read(tByte, 2048, 1024);
+                    os.write(tByte, 0, 1024);
                     os.flush();
+                    bis.close();
                     
                     
                 } finally{
