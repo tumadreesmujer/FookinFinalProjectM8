@@ -10,11 +10,10 @@ Working:
 - Reassembling chunks back into full file
 - Versioning file
 - Encryption/decryption of files
+- Network connection from one server to one client
+- File to track packets and checksums
 
 Needed (in order of probable difficulty):
-- File for metainformation
-- File to track packets and checksums
-- Network connection from one server to one client
 - Conflict resolution
 - Progress trackers for downloads
 - Network connection broadly through LAN

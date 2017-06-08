@@ -35,6 +35,9 @@ public class TextFileReader {
 		s=f;
 		tr.close();
 	}
+	public void clear(){
+		s= new ArrayList<String>();
+	}
 	public String getLine(int i){
 		return s.get(i);
 	}
@@ -46,6 +49,9 @@ public class TextFileReader {
 	}
 	public void addLine(int i, String S){
 		s.add(i, S);
+	}
+	public void addLine(String S){
+		s.add(S);
 	}
 	public void updateText(ArrayList<String> S){
 		s=S;	
