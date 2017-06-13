@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple Swing-based client for the capitalization server.
@@ -67,27 +68,37 @@ public class Client {
      */
     public void connectToServer() throws IOException {
 		socket = new Socket(serverAddress, serverPort);
-        in = new BufferedReader(
-                new InputStreamReader(socket.getInputStream()));
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
 
         // Consume the initial welcoming messages from the server
 
         System.out.println(in.readLine());
     }
+    public void sendReady(String s) throws IOException{
+    	PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        out.println("ready: "+s);
+    }
 
     /**
      * Runs the client application.
      */
     public static void main(String[] args) throws Exception {
-        Client client = new Client("10.202.34.184",9090);
+        Client client = new Client("192.168.1.13",9090);
         client.connectToServer();
-        byte[] tByte = new byte[1024*10];
+        int kB = 64;
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        byte[] tByte = new byte[1024*kB]; 
+        String tempName = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine().toString();
+        out = new PrintWriter(socket.getOutputStream(), true);
+        out.println("ready");
+		TimeUnit.SECONDS.sleep(1);
         InputStream is = socket.getInputStream();
-        FileOutputStream fos = new FileOutputStream("test.jpg");
+        FileOutputStream fos = new FileOutputStream(tempName);
+        //FileOutputStream fos = new FileOutputStream("test2.png");
         BufferedOutputStream bos = new BufferedOutputStream(fos);
-        int bytesRead = is.read(tByte, 0, 10000);
-        bos.write(tByte, 0, 10000);
+        int bytesRead = is.read(tByte, 0, 1024*kB);
+        bos.write(tByte, 0, bytesRead);
         bos.close();
     }
 }
