@@ -2,12 +2,14 @@ package general;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple Swing-based client for the capitalization server.
@@ -58,36 +60,38 @@ public class Client {
         });*/
     }
 
-    /**
-     * Implements the connection logic by prompting the end user for
-     * the server's IP address, connecting, setting up streams, and
-     * consuming the welcome messages from the server.  The Capitalizer
-     * protocol says that the server sends three lines of text to the
-     * client immediately after establishing a connection.
-     */
     public void connectToServer() throws IOException {
 		socket = new Socket(serverAddress, serverPort);
-        in = new BufferedReader(
-                new InputStreamReader(socket.getInputStream()));
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
-
-        // Consume the initial welcoming messages from the server
-
-        System.out.println(in.readLine());
     }
 
-    /**
-     * Runs the client application.
-     */
     public static void main(String[] args) throws Exception {
-        Client client = new Client("10.202.34.184",9090);
-        client.connectToServer();
-        byte[] tByte = new byte[1024*10];
-        InputStream is = socket.getInputStream();
-        FileOutputStream fos = new FileOutputStream("test.jpg");
-        BufferedOutputStream bos = new BufferedOutputStream(fos);
-        int bytesRead = is.read(tByte, 0, 10000);
-        bos.write(tByte, 0, 10000);
-        bos.close();
+        getFile("192.168.1.3",9090);
+        getFile("192.168.1.3",9090);
     }
+    public static void getFile(String ip, int Socket) throws IOException{
+        Client client = new Client(ip,Socket);
+        client.connectToServer();
+        int kB = 24;
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        byte[] tByte = new byte[1024*kB]; 
+        String file = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine().toString().substring(1);
+        File tempName = new File(file.substring(file.lastIndexOf("\\")));
+        System.out.println(file);
+        //out = new PrintWriter(socket.getOutputStream(), true);
+        InputStream is = socket.getInputStream();
+        FileOutputStream fos = new FileOutputStream(file);
+        //FileOutputStream fos = new FileOutputStream("test2.png");
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        int bytesRead = is.read(tByte, 0, 1024*kB);
+        bos.write(tByte, 0, bytesRead);
+        out.write("done");
+        bos.close();
+        out.close();
+        is.close();
+        fos.close();
+        System.out.println("done");
+        
+        }
 }
