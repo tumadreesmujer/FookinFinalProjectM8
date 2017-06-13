@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public final class PackerMan {
 	public File fLoc;
+	public int pNum;
 	public int pSize;
 	public int vNum;
 	public String fName;
@@ -32,14 +33,14 @@ public final class PackerMan {
 		fr.addLine(""+pSize);
 		fr.addLine(""+cSum(fLoc.getAbsolutePath()));
 		String temp ="";
-		FileSplit fs = new FileSplit(fLoc);
+		FileSplit fs = new FileSplit(fLoc,pSize);
 		//System.out.println(fLoc.getAbsolutePath());
 		File tempF = new File(fLoc.getAbsolutePath().substring(0, fLoc.getAbsolutePath().replaceAll("\\\\","/").lastIndexOf("/"))+"/$temp");
 		//Files.createDirectories(Paths.get(fLoc.getParent()+"/$temp"));
 		//System.out.println(tempF.list().length);
 		cSums = new String[tempF.list().length];
-		int numPackets = (int)Math.ceil(fLoc.length()/pSize);
-		for(int i=0;i<numPackets;i++){
+		pNum= (int)Math.ceil(fLoc.length()/pSize);
+		for(int i=0;i<pNum;i++){
 			cSums[i]=cSum(tempF.getAbsolutePath()+"/"+fName+"."+String.format("%07d",i));
 			temp+=i+":"+cSum(tempF.getAbsolutePath()+"/"+fName+"."+String.format("%07d",i))+"*";
 		}

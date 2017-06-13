@@ -56,12 +56,15 @@ public  class AutoDetect {
 		for(int i = 0; i < temp.size();i++){
 			//System.out.println(temp.get(i).getPath().replaceAll("\\\\","/"));
 			if(temp.get(i).isFile()){
+				
 				if(!temp.get(i).getAbsolutePath().substring(temp.get(i).getAbsolutePath().lastIndexOf(".")).equals(".ffmpm")){
+
+					System.out.println(temp.get(i).getName());
 					File tempF =new File( temp.get(i).getPath().replaceAll("\\\\","/"));
 					AL.add(tempF);
 				}
 			}
-			if(temp.get(i).isDirectory()){
+			if(temp.get(i).isDirectory()&&!temp.get(i).getName().equals("$temp")){
 				AL.addAll(updateFiles(new File( temp.get(i).getPath().replaceAll("\\\\","/")),AL));
 			}
 			
