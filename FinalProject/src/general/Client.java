@@ -66,10 +66,8 @@ public class Client {
         out = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    public static void main(String[] args) throws Exception {
-        getFile("192.168.1.3",9090);
-        getFile("192.168.1.3",9090);
-    }
+    public static void main(String[] args) throws Exception {}
+    	
     public static void getFile(String ip, int Socket) throws IOException{
         Client client = new Client(ip,Socket);
         client.connectToServer();
