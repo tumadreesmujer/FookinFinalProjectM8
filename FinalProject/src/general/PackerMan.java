@@ -9,11 +9,13 @@ import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-public class PackerMan {
-	private File fLoc;
-	private int pSize;
-	private int vNum;
-	private String fName;
+public final class PackerMan {
+	public File fLoc;
+	public int pNum;
+	public int pSize;
+	public int vNum;
+	public String fName;
+	public String[] cSums;
 	private TextFileReader fr;
 	public PackerMan(File fileLocation, int packetSize, int versionNumber) throws IOException, NoSuchAlgorithmException{
 		fLoc = fileLocation;
@@ -31,12 +33,15 @@ public class PackerMan {
 		fr.addLine(""+pSize);
 		fr.addLine(""+cSum(fLoc.getAbsolutePath()));
 		String temp ="";
-		FileSplit fs = new FileSplit(fLoc);
-		System.out.println(fLoc.getAbsolutePath());
+		FileSplit fs = new FileSplit(fLoc,pSize);
+		//System.out.println(fLoc.getAbsolutePath());
 		File tempF = new File(fLoc.getAbsolutePath().substring(0, fLoc.getAbsolutePath().replaceAll("\\\\","/").lastIndexOf("/"))+"/$temp");
 		//Files.createDirectories(Paths.get(fLoc.getParent()+"/$temp"));
-		System.out.println(tempF.list().length);
-		for(int i=0;i<tempF.list().length;i++){
+		//System.out.println(tempF.list().length);
+		cSums = new String[tempF.list().length];
+		pNum= (int)Math.ceil(fLoc.length()/pSize);
+		for(int i=0;i<pNum;i++){
+			cSums[i]=cSum(tempF.getAbsolutePath()+"/"+fName+"."+String.format("%07d",i));
 			temp+=i+":"+cSum(tempF.getAbsolutePath()+"/"+fName+"."+String.format("%07d",i))+"*";
 		}
 		fr.addLine(temp);

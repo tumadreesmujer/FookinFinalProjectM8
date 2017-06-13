@@ -10,10 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 public class FileSplit {
-    public FileSplit(File f) throws IOException {
+    public FileSplit(File f,int kB) throws IOException {
         int partCounter = 0;
 
-        int sizeOfFiles = 8*8;
+        int sizeOfFiles = kB;
         byte[] buffer = new byte[sizeOfFiles];
 
         try (BufferedInputStream bis = new BufferedInputStream(
