@@ -1,5 +1,4 @@
 package general;
-import static general.Client.getFile;
 import static general.FileMerge.mergeFiles;
 
 import java.io.File;
@@ -13,9 +12,12 @@ public class ClientMainMethod {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		try{
+		while(true){
+	        Server.getFile(new File(Server.getText(4444)),4445);
+	    }
+		/*try{
 			while(true){
-		        getFile("192.168.1.3",9090);
+		        Client.getFile("192.168.1.3",9090);
 		    }
 		}catch(ConnectException e){
 			List<File> temp = (Arrays.asList(new File("res/test").listFiles()));
@@ -31,7 +33,7 @@ public class ClientMainMethod {
 					mergeFiles(tempFiles,new File("res/test/" +tempName));
 				}
 			}
-		}
+		}*/
 	}
 
 }

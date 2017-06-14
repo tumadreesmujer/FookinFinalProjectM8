@@ -1,83 +1,87 @@
 package general;
- 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
- 
-/**
-* A TCP server that runs on port 9090.  When a client connects, it
-* sends the client the current date and time, then closes the
-* connection with that client.  Arguably just about the simplest
-* server you can write.
-*/
+
 public class Server {
-                static ServerSocket listener;
-                static Socket socket;
-    /**
-     * Runs the server.
-    * @throws InterruptedException
-     */
-    public static void main(String[] args) throws IOException, InterruptedException {
+	static int port;
+    static ServerSocket serverSocket = null;
+	static Socket socket = null;
+	static InputStream in = null;
+	static OutputStream out = null;
+    public static void main(String[] args) throws IOException {
+    	getFile(new File(getText(4444)),4445);
+    	getFile(new File(getText(4444)),4445);
     }
-    public static void sendFile(File f) throws IOException{
-    	listener = new ServerSocket(9090);
-    		boolean temp = true;
-            while (temp) {
-                socket = listener.accept();
-                try {
-                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    System.out.println("Connected to:"+socket.getInetAddress().toString().substring(1)+":"+socket.getPort());
-                    //sendFile(new File("res/test/code.jpg"));
-                   /*
-                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    System.out.println(in.readLine());
-                    in.close();*/
-                    int B=f.length()<1024*25?(int)f.length():1024*25;
-                    byte[] tByte=new byte[B];
-                    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f));
-                    PrintWriter pr = new PrintWriter(socket.getOutputStream());
-                    System.out.println(f.getAbsolutePath().replaceAll("\\\\", "/"));
-                    pr.println(f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("\\res\\")));
-                    pr.flush();
-                    OutputStream os = socket.getOutputStream();/*
-                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    System.out.println(in.readLine());*/
-                    //pr.close();
-                    bis.read(tByte, 0, B);
-                    
-                    os.write(tByte, 0, B);
-                    os.flush();
-                    bis.close();
-                    in.close();
-                    String tempStr= new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine().toString();
-                    if(tempStr.equals("done"))
-                    	listener.close();
-                    	return;
-                    
-                } catch(SocketException e){
-                	listener.close();
-                	return;
-                }
-            
-            }
-           
-            
-        
+    public static void getFile(File f, int p){	
+    	port=p;
+    	try {
+            serverSocket = new ServerSocket(p);
+        } catch (IOException e) {
+            System.out.println("Can't setup server on this port number. ");
+            e.printStackTrace();
+        }
+         try {
+             socket = serverSocket.accept();
+         } catch (IOException ex) {
+             System.out.println("Can't accept client connection. ");
+         }
+
+         try {
+             in = socket.getInputStream();
+         } catch (IOException ex) { 
+             System.out.println("Can't get socket input stream. ");
+         }
+
+         try {
+             out = new FileOutputStream(f);
+         } catch (FileNotFoundException ex) {
+             System.out.println("File not found. ");
+         }
+
+         byte[] bytes = new byte[16*1024];
+
+         int count;
+         try {
+			while ((count = in.read(bytes)) > 0) {
+			     out.write(bytes, 0, count);
+			 }
+
+			 out.close();
+			 in.close();
+			 socket.close();
+			 serverSocket.close();
+			 return;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
-    public void killServer() throws IOException{
-            socket.close();
-           listener.close();
-    }
-   
+    public static String getText(int p){
+        try {
+            serverSocket = new ServerSocket(4444);
+            socket = serverSocket.accept();
+			InputStreamReader inputstreamreader = new InputStreamReader(socket.getInputStream());
+			BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
+			String s = bufferedreader.readLine();
+			bufferedreader.close();
+			inputstreamreader.close();
+			socket.close();
+			serverSocket.close();
+			return s;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+       }
+    
 }
