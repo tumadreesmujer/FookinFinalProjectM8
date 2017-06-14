@@ -26,6 +26,9 @@ public class Server {
     	try {
             serverSocket = new ServerSocket(p);
         } catch (IOException e) {
+            System.out.println("Can't setup server on this port number. ");
+            e.printStackTrace();
+
             //System.out.println("Can't setup server on this port number. ");
             //e.printStackTrace();
         }
