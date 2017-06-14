@@ -26,8 +26,8 @@ public class Server {
     	try {
             serverSocket = new ServerSocket(p);
         } catch (IOException e) {
-            System.out.println("Can't setup server on this port number. ");
-            e.printStackTrace();
+            //System.out.println("Can't setup server on this port number. ");
+            //e.printStackTrace();
         }
          try {
              socket = serverSocket.accept();
@@ -62,7 +62,7 @@ public class Server {
 			 return;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     }
     public static String getText(int p){
