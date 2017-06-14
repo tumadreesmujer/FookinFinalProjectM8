@@ -17,6 +17,7 @@ public class MainMethod {
 		List <File> files = aD.getFiles();
 		
 		if(files!=null){
+
 			System.out.println(files.size());
 			for(int i=0;i<files.size();i++){
 				pMan.add(new PackerMan(files.get(i),pSize,0));
@@ -37,6 +38,7 @@ public class MainMethod {
 					System.out.println(temp2Str);
 					Client.sendText(temp2Str,ip, tPort);
 					EncryptOrDecrypt.encrypt("default_key", new File(pMan.get(i).fLoc.getAbsolutePath().substring(0, pMan.get(i).fLoc.getAbsolutePath().replaceAll("\\\\","/").lastIndexOf("/"))+"/$temp/"+pMan.get(i).fName+"."+String.format("%07d",j)), new File(pMan.get(i).fLoc.getAbsolutePath().substring(0, pMan.get(i).fLoc.getAbsolutePath().replaceAll("\\\\","/").lastIndexOf("/"))+"/$temp/"+pMan.get(i).fName+"."+String.format("%07d",j)));
+
 					Client.sendFile(new File(pMan.get(i).fLoc.getAbsolutePath().substring(0, pMan.get(i).fLoc.getAbsolutePath().replaceAll("\\\\","/").lastIndexOf("/"))+"/$temp/"+pMan.get(i).fName+"."+String.format("%07d",j)),ip, fPort);
 					//sendFile(new File(pMan.get(i).fLoc.getAbsolutePath().substring(0, pMan.get(i).fLoc.getAbsolutePath().replaceAll("\\\\","/").lastIndexOf("/"))+"/$temp/"+pMan.get(i).fName+"."+String.format("%07d",j)));
 				}
@@ -46,6 +48,7 @@ public class MainMethod {
 				}*/
 			}
 			Client.sendText("!!done", ip, tPort);
+
 			System.out.println(pMan.size());
 		
 		}

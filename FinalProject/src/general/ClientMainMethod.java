@@ -9,13 +9,11 @@ import java.util.List;
 public class ClientMainMethod {
 
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
+
+
 		while(true){
 	        Server.getFile(new File(Server.getText(4444)),4445);
 	    }
-		/*try{
-			
-		}catch(Exception e){
 			List<File> temp = (Arrays.asList(new File("res/test").listFiles()));
 			for(int i=0;i<temp.size();i++){
 				System.out.println(temp.get(i).getAbsolutePath());
